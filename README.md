@@ -1,68 +1,48 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+To Run:
+    1. Clone or Download Repository
+    2. Go to the directory using terminal
+    3. Type "npm install"
+          a. This will install all the dependencies
+    4. Type "npm start"
+          a. This will start the development server
 
-## Available Scripts
 
-In the project directory, you can run:
+Dependencies Used:
+    1. React
+    2. Redux
+    3. Material-ui (core & icons)
+    4. React-Router
 
-### `npm start`
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+  The Design:
+    1. I use the boilerplate provided by create-react-app and removed their CSS files
+    2. Added my components to the Components folder
+        a. Search
+            - This is the main component which contains the search box and uses mapStateToProps and mapDispatchToProps to communicate with the Redux store
+            - This is a class based component which filters the results based on the first three letters in search box and passes those props to the functional component CompleteList.js for them to be displayed
+            - I am also passing a function handleSelect as props to CompleteList.js for it to modify the state based on the option that the user selects
+        b. CompleteList
+            - This functional component takes care of outputting the matching results of the first three letters in the form of a list.
+            - Once a user clicks on one of those choices we call the handleSelect function with the value of the item that is clicked. The function sets the state in the Search.js component and dispatch the ADD_QUERY action
+        c. Navbar
+            - This is also a functional component which basically uses Link from 'react-router-dom' to connect the user to the Results page and the main Search page
+        d. Results
+            - This is also a class based component which maps the results of the searched queries and displays them in the form of a list.
+    3. App.js - Component
+          - This is where the BrowserRouter is setup from 'react-router-dom' which links us to the two different routes to render the components
+    4. index.js
+          - I setup the Redux store here using the createStore function from 'redux'
+    5. reducers
+          - The reducers folder only contains one file which is the rootReducer.js. My initialState is setup here and I decided to add the dataset provided in here in books and cities. I also have two empty arrays here which are later updated with the results of our queries.  
+          - I only have one action "ADD_QUERY" and before updating any of my two result arrays I check to see which array the payload(query) from the action needs to be added to. I search for a match within the two arrays and upon finding a match it adds it to the correct result array.
 
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
 
-### `npm test`
+    Things I could have done better:
+      1. The paper element surrounding the CompleteList.js form needs to be styled so it does not show all the time.
+      2. When the auto complete shows matching result the hover does not highlight the entire width of the paper.
+      3. I know that this code can be condensed to fewer lines.
 
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+      Questions I had:
+          1. I was confused regarding if we were to limit the number of times the user can query?
+              - Could be done by keeping tack of what has been searched - for example if we have a city stored in our cityQuery (result) array (if cityQuery.length ==  1) we would only map the books to props and vice-versa
+              
